@@ -16,7 +16,7 @@ public class HuygensPrinciple : MonoBehaviour {
 	public Text particleSpeedText, particleSizeText, distanceText, huygensText, iorText;
 	public Gradient blueGradient;
 	[HideInInspector]
-	public bool linesVisible=false;
+	public bool linesVisible;
 	void Awake() {
 	if(instance==null) {
 		instance = this;
@@ -33,13 +33,15 @@ public class HuygensPrinciple : MonoBehaviour {
 	void FixedUpdate() {
 		foreach(Transform current in particles) {
 			Particle currentParticle = current.GetComponent<Particle>();
-			currentParticle.velocity = currentParticle.velocity.normalized*particleSpeed;
+			if(!currentParticle.hasHitRefractiveSurface)
+				currentParticle.velocity = currentParticle.velocity.normalized*particleSpeed;
 			current.position = new Vector3(current.position.x+currentParticle.velocity.x*Time.deltaTime, current.position.y+currentParticle.velocity.y*Time.deltaTime, 0f);
 			Debug.DrawLine(current.position, current.position+currentParticle.velocity, Color.green);
 		}
 		foreach(Transform current in huygensParticles) {
 			Particle currentParticle = current.GetComponent<Particle>();
-			currentParticle.velocity = currentParticle.velocity.normalized*particleSpeed;
+			if(!currentParticle.hasHitRefractiveSurface)
+				currentParticle.velocity = currentParticle.velocity.normalized*particleSpeed;
 			current.position = new Vector3(current.position.x+currentParticle.velocity.x*Time.deltaTime, current.position.y+currentParticle.velocity.y*Time.deltaTime, 0f);
 			Debug.DrawLine(current.position, current.position+currentParticle.velocity, Color.green);
 		}

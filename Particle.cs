@@ -4,4 +4,6 @@ using UnityEngine;
 
 public class Particle : MonoBehaviour {
 	public Vector3 velocity;
+	[HideInInspector]
+	public bool hasHitRefractiveSurface;
 }
